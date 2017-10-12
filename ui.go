@@ -15,7 +15,7 @@ type consoleWriter struct {
 var popup func(g *gocui.Gui) error
 
 func (c *consoleWriter) Write(p []byte) (n int, err error) {
-	c.gui.Execute(func(g *gocui.Gui) error {
+	c.gui.Update(func(g *gocui.Gui) error {
 		n, err = c.view.Write(p)
 		return nil
 	})
@@ -173,7 +173,7 @@ func CredentialApproverUIFunc(done <-chan struct{}, gui *gocui.Gui) CredentialAp
 			}
 			return nil
 		}
-		gui.Execute(popup)
+		gui.Update(popup)
 
 		select {
 		case c := <-inputChan:
@@ -264,7 +264,7 @@ func CredentialSelectorUIFunc(done <-chan struct{}, gui *gocui.Gui) CredentialSe
 			}
 			return nil
 		}
-		gui.Execute(popup)
+		gui.Update(popup)
 
 		select {
 		case c := <-inputChan:
